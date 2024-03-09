@@ -8,6 +8,13 @@ const http = require('http');
 const multer = require('multer');
 const socketIO = require('socket.io');
 const { execSync } = require('child_process');
+const EventEmitter = require('events');
+
+// Create a new EventEmitter instance
+const emitter = new EventEmitter();
+
+// Increase the limit for this particular instance
+emitter.setMaxListeners(15);
 
 const releasePort = () => {
     try {
@@ -128,7 +135,7 @@ io.on('connection', (socket) => {
 });
 
 const startAudio = () => {
-    audioPlaying = true;
+    // audioPlaying = true;
     audioProcess = spawn('mplayer', [audioFile]);
 }
 
@@ -149,7 +156,9 @@ const watchHCSR04 = () => {
 
 
             if (distanceVal < DISTANCE_THRESHOLD) {
-                if (audioProcess) {
+                if (audioProcess?.pid) {
+                    // console.log("get audioProcess", audioProcess);
+
                     audioProcess.stdout.on('data', (data) => {
                         // console.log(`mplayer output: ${data}`);
                         if (data.includes('A:')) {
@@ -163,7 +172,22 @@ const watchHCSR04 = () => {
                             // console.log('Audio is stopped');
                         }
                     });
+
+                    audioProcess.on('exit', (code, signal) => {
+                        // console.log(`mplayer process exited with code ${code} and signal ${signal}`);
+                        audioPlaying = false;
+                        audioProcess = undefined;
+                    });
+
+                    exec('pgrep mplayer', (error, stdout, stderr) => {
+                        if (error) {
+                            audioPlaying = false;
+                            startAudio();
+                        }
+                    });
+
                 } else {
+                    audioProcess = undefined;
                     startAudio();
                 }
             }
