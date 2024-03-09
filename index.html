@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>xtravu eSense Audio Trigger</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="center">
+    <div class="container">
+        <div class="AppExample">
+            <!-- <div class="TitleBar">
+                <div class="SyncPlayAutomator">
+                    Sync Play Automator
+                </div>
+            </div> -->
+            <div class="AppArea">
+                <!-- left side all tabs -->
+                <div class="Menu">
+                    <div class="MenuItem SelectedMenuItem" id="ThresholdTab" onclick="menuSelectionHandler(this)">
+                        <div class="ThresholdLogo">
+                            <img src="/image/Threshold-Logo.png" />
+                        </div>
+                        <div class="ThresholdValue">
+                            Control Panel
+                        </div>
+                    </div>
+                    <!-- <div class="MenuItem" id="DeviceTab" onclick="menuSelectionHandler(this)">
+                        <div class="DeviceInfoLogo">
+                            <img src="/image/Device-Info-Logo.png" />
+                        </div>
+                        <div class="DeviceInfo">
+                            Device Info
+                        </div>
+                    </div>
+                    <div class="MenuItem" id="AnalyticsTab" onclick="menuSelectionHandler(this)">
+                        <div class="AnalyticsLogo">
+                            <img src="/image/Device-Info-Logo.png" />
+                        </div>
+                        <div class="AnalyticsInfo">
+                            Analytics Info
+                        </div>
+                    </div> -->
+
+                    <img class="Xtravu-Img" src="/image/Xtravu-Logo.png" />
+
+                    <div class="CopyRightDiv">Copyright © 2023 DS Techworks Solutions Pvt. Ltd. </div>
+                </div>
+
+                <!-- right side tab informations -->
+
+                <div class="Workarea DevicesContainer" id="tabInformation">
+                    <div class="Devices">
+                        <div class="left-wrap ThresholdDistance">
+                            Threshold Distance
+                        </div>
+                        <div class="right-wrap Threshold">
+                            <div class="Cms center" id="thresholdVal">
+                                199 cm
+                            </div>
+                            <div class="Cms center DisplayNone" id="inputThresholdVal">
+                                <input type="text" placeholder="Enter a Threshold (1 - 400 Cm)" id="addedThreshold">
+                            </div>
+                            <div class="EditLogo" id="editThreshold">
+                                <img src="/image/Edit-Logo.png" id="editLogoThreshold" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Devices">
+                        <div class="left-wrap CurrentDistance">
+                            Current Distance
+                        </div>
+                        <div class="right-wrap Frame3465169">
+                            <div class="Cms" id="UltrasonicObjectValue">
+                                400 cm
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Devices">
+                        <div class="left-wrap Action">
+                            Action
+                        </div>
+                        <div class="MuteUnmute-Dropdown" id="muteUnmuteDropdownMain">
+                            <div class="DeviceStatus-First DeviceStatus">
+                                Mute/Unmute
+                                <div class="center-logo" id="muteUnmuteDropDown">
+                                    <img src="/image/Down-Arrow_Logo.png" id="dropDownImg" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="MuteUnmute-Dropdown" style="display: none;" id="openedMuteUnmuteDropdown">
+                            <div class="DeviceStatus-First DeviceStatus">
+                                Mute/Unmute
+                                <div class="center-logo" id="muteUnmuteDropDown">
+                                    <img src="/image/Up-Arrow_Logo.png" id="dropDownImg" />
+                                </div>
+                            </div>
+                            <!-- <div class="DeviceStatus">
+                                Play/Pause
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="Devices">
+                        <div class="left-wrap Status">
+                            Status
+                        </div>
+                        <div class="right-wrap Frame3465170">
+                            <div class="DeviceStatus" id="muteUnmuteText">
+                                Mute
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="Devices" id="audio-upload">
+                        <div class="left-wrap Status">
+                            Audio Upload
+                        </div>
+                        <div class="right-wrap Frame3465170">
+                            <form id="uploadForm" enctype="multipart/form-data">
+                                <input type="file" id="audioFile" name="audioFile" accept="audio/*">
+                                <button style="margin-top: 8px;" type="submit">Upload</button>
+                                <div style="margin-top: 8px;" id="uploadStatus"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Workarea DevicesContainer DisplayNone" id="deviceInformation">
+                    <div class="Devices">
+                        <div class="left-wrap CurrentDistance">
+                            Path
+                        </div>
+                        <div class="right-wrap Frame3465169">
+                            <div class="Cms" id="port"></div>
+                        </div>
+                    </div>
+                    <div class="Devices">
+                        <div class="left-wrap Status">
+                            Serial Number
+                        </div>
+                        <div class="right-wrap Frame3465170">
+                            <div class="DeviceStatus" id="serialNum">
+                                FGHJ45654JHHJJ4H
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Devices">
+                        <div class="left-wrap Status">
+                            Techworks ID
+                        </div>
+                        <div class="right-wrap Frame3465170">
+                            <div class="DeviceStatus" id="techworkId">
+                                TWXXX
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Devices">
+                        <div class="left-wrap Status">
+                            Device Start Time
+                        </div>
+                        <div class="right-wrap Frame3465170">
+                            <div class="DeviceStatus" id="deviceStartTime">
+                                Nov 28, 2023 2:48:04 PM
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Devices">
+                        <div class="left-wrap Status">
+                            Last Activated Time
+                        </div>
+                        <div class="right-wrap Frame3465170">
+                            <div class="DeviceStatus" id="deviceOfflineTime">
+                                Nov 29, 2023 4:00:00 PM
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Workarea DevicesContainer DisplayNone" id="analyticsInformation">
+                    <div class="Devices">
+                        <div class="left-wrap CurrentDistance">
+                            Count
+                        </div>
+                        <div class="right-wrap Frame3465169">
+                            <div class="DeviceStatus">
+                                0
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Devices">
+                        <div class="left-wrap Status">
+                            Time Stamp
+                        </div>
+                        <div class="right-wrap Frame3465170">
+                            <div class="DeviceStatus" id="timeStampVal">
+                                20XX-XX-XX
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        let defaultVal = false;
+        let selectedAudioFile = null;
+
+        socket.on('server message', (msg) => {
+            console.log(msg);
+        });
+
+        socket.on('ultrasonic dist', (msg) => {
+            console.log("Data :: ", msg);
+            document.getElementById("UltrasonicObjectValue").textContent = msg.distance;
+        });
+
+
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fileInput = document.getElementById('audioFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please select a file');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('audioFile', file);
+
+            fetch('/upload-audio', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('uploadStatus').innerText = data.message;
+                })
+                .catch(error => {
+                    console.error('Error uploading file:', error);
+                    document.getElementById('uploadStatus').innerText = 'Error uploading file';
+                });
+        });
+
+
+        const getThreshold = () => {
+            fetch('/distance-threshold')
+                .then(response => response.json())
+                .then(data => {
+                    let getThresholdData = data.DISTANCE_THRESHOLD;
+                    document.getElementById("thresholdVal").innerHTML = `${getThresholdData} cm`
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        getThreshold();
+
+        const updateThreshold = (newThreshold) => {
+            fetch('/update-distance-threshold', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ DISTANCE_THRESHOLD: newThreshold })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Threshold updated successfully");
+                        getThreshold();
+                    } else {
+                        console.error("Failed to update threshold:", response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error updating threshold:', error));
+        }
+
+        let thresholdValue = document.getElementById("thresholdVal");
+        let inputThresholdVal = document.getElementById("inputThresholdVal");
+
+        const inputThresholdHandler = () => {
+            if (defaultVal) {
+                thresholdValue.classList.remove("DisplayNone");
+                inputThresholdVal.classList.add("DisplayNone");
+                defaultVal = false
+
+                let addedThreshold = document.getElementById("addedThreshold").value;
+                // document.getElementById("thresholdVal").innerHTML = `${addedThreshold} cm`
+                updateThreshold(addedThreshold);
+            } else {
+                thresholdValue.classList.add("DisplayNone");
+                inputThresholdVal.classList.remove("DisplayNone");
+                defaultVal = true
+            }
+        }
+
+        editThreshold.addEventListener('click', inputThresholdHandler);
+
+    </script>
+</body>
+
+</html>

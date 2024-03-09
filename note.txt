@@ -1,0 +1,2 @@
+sudo fuser -k 8888/tcp
+omxplayer --version
